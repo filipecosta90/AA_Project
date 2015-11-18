@@ -1,0 +1,11 @@
+*.out
+CMakeFiles/**
+bin/**
+build/**
+timing/**
+*.cmake
+.DS_Store
+CMakeCache.txt
+equalization
+*.e*
+*.o*
