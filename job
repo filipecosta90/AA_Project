@@ -24,7 +24,8 @@
 
 #PBS -m abe
 #PBS -M a57816@alunos.uminho.pt
-
+#PBS -M a57779@alunos.uminho.pt
+#
 #          Specify the number of nodes requested and the
 #          number of processors per node. 
 
@@ -39,6 +40,6 @@ read -r node_info<$PBS_NODEFILE
 
 echo "Allocated computing node: $node_info"
 
-cat proc/cpuinfo
+cat /proc/cpuinfo
 
 
