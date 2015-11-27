@@ -1,5 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
 
 void matrix_multiplication(float **a, float **b, float **c, int N){
 	for(unsigned i=0;i<N;i++){
@@ -9,9 +7,5 @@ void matrix_multiplication(float **a, float **b, float **c, int N){
 			}
 		}
 	}
-}
-
-int main (int argc, char *argv[]){
-	return 1;
 }
 
