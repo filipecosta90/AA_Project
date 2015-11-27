@@ -12,7 +12,7 @@ void fillMatrices (float **a, float **b, float **c ){
 	for (unsigned i=0;i<SIZE;++i){
 		for(unsigned j=0; j<SIZE; ++j){
 			a[i][j] = ((float) rand()) / ((float) RAND_MAX);
-			b[i][j] = 1;
+			b[i][j] = ((float) rand()) / ((float) RAND_MAX);
 			c[i][j] = 0;
 		}
 	}
