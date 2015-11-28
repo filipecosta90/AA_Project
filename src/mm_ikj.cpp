@@ -100,14 +100,12 @@ int main (int argc, char *argv[]){
 retval = PAPI_stop(EventSet,values);
 	
 	FILE *file;
-	file = fopen("../Results/results_L1.csv","w");
-	fprintf(file,"Execution Time,PAPI_FP_OPS,PAPI_TOT_CYC,PAPI_TOT_INS,PAPI_LD_INS,PAPI_L1_TCM,PAPI_L2_TCM,PAPI_L3_TCM\n");
-	printf("Execution Time,PAPI_FP_OPS,PAPI_TOT_CYC,PAPI_TOT_INS,PAPI_LD_INS,PAPI_L1_TCM,PAPI_L2_TCM,PAPI_L3_TCM\n");
+	file = fopen(argv[1],"w+");
 
 	fprintf(file,"%lld,",total_duration);
 	for(int i = 0; i<NUM_EVENTS; i++){
 		fprintf(file,"%lld,",values[i]);	
-		printf("%lld,",values[i]);	
+		printf("%lld\t",values[i]);	
 	}
 	fprintf(file,"%lld\n",values[NUM_EVENTS-1]);
 	printf("%lld\n",values[NUM_EVENTS-1]);

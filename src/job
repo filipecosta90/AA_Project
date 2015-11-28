@@ -1,0 +1,14 @@
+#!/bin/sh
+
+g++ -O3 -std=c++11 mm_ikj.cpp -lpapi -o mm_ikj
+g++ -O3 -std=c++11 headers.cpp  -o make_header
+
+for matrix in 48 128 512 2048
+do
+echo "matrix size $matrix x $matrix"
+./make_header $matrix
+for it in 1 2 3 4 5 6 7 8
+do
+   ./mm_ikj $matrix 
+done
+done
