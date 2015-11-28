@@ -44,5 +44,5 @@ papi_avail
 
 cd AA_Project/src/
 
-./mm_2dot3 2048
+./mm_2dot3 1532
 

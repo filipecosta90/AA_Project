@@ -33,7 +33,7 @@ void stop ( void ) {
 	total_duration = final_time - initial_time;
 }
 
-void fillMatrices (float **a, float **b, float **c, int N){
+void fillMatrices (float **a, float **b, float **c, unsigned N){
 	for (unsigned i=0;i<N;++i){
 		for(unsigned j=0; j<N; ++j){
 			a[i][j] = ((float) rand()) / ((float) RAND_MAX);
@@ -43,7 +43,7 @@ void fillMatrices (float **a, float **b, float **c, int N){
 	}
 }
 
-void matrix_mult_2dot3 (float **a, float **b, float **c, int N){
+void matrix_mult_2dot3 (float **a, float **b, float **c, unsigned N){
 	for(unsigned i=0;i<N;i++){
 		for(unsigned k=0;k<N;k++){
 			for(unsigned j=0;j<N;j++){
@@ -55,7 +55,7 @@ void matrix_mult_2dot3 (float **a, float **b, float **c, int N){
 
 int main (int argc, char *argv[]){
 	
-	int size = atoi(argv[1]);	
+	unsigned size = atoi(argv[1]);	
 
 	float **mat_a, **mat_b, **mat_c;
 	mat_a = new float*[size];
@@ -94,7 +94,7 @@ int main (int argc, char *argv[]){
 		stop();
 		retval = PAPI_stop(EventSet,values);
 		
-		fprintf(file,"%d,",total_duration);
+		fprintf(file,"%lld,",total_duration);
 		for(int i = 0; i<NUM_EVENTS-1; i++){
 			fprintf(file,"%lld,",values[i]);	
 		}
