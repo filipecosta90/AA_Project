@@ -91,30 +91,27 @@ int main (int argc, char *argv[]){
 	retval = PAPI_library_init(PAPI_VER_CURRENT);
 	retval = PAPI_create_eventset(&EventSet);
 	retval = PAPI_add_events(EventSet,Events,NUM_EVENTS);
-	int ite = 0;
+		clearCache();
+	retval = PAPI_start(EventSet);
+	start();
+	//Matrix Multiplication
+	matrix_mult_ikj ( mat_a, mat_b, mat_c, size);	
+	stop();
+retval = PAPI_stop(EventSet,values);
+	
 	FILE *file;
 	file = fopen("../Results/results_L1.csv","w");
 	fprintf(file,"Execution Time,PAPI_FP_OPS,PAPI_TOT_CYC,PAPI_TOT_INS,PAPI_LD_INS,PAPI_L1_TCM,PAPI_L2_TCM,PAPI_L3_TCM\n");
-	do{
-		clearCache();
-		retval = PAPI_start(EventSet);
-		start();
-		//Matrix Multiplication
-		matrix_mult_ikj ( mat_a, mat_b, mat_c, size);	
-		stop();
-		retval = PAPI_stop(EventSet,values);
-		fprintf(file,"%lld,",total_duration);
-		for(int i = 0; i<NUM_EVENTS-1; i++){
-			fprintf(file,"%lld,",values[i]);	
-		}
-		fprintf(file,"%lld\n",values[NUM_EVENTS-1]);
-		retval = PAPI_reset(EventSet);		
-		ite++;
+	printf("Execution Time,PAPI_FP_OPS,PAPI_TOT_CYC,PAPI_TOT_INS,PAPI_LD_INS,PAPI_L1_TCM,PAPI_L2_TCM,PAPI_L3_TCM\n");
 
-	}while(ite<8);
-
+	fprintf(file,"%lld,",total_duration);
+	for(int i = 0; i<NUM_EVENTS; i++){
+		fprintf(file,"%lld,",values[i]);	
+		printf("%lld,",values[i]);	
+	}
+	fprintf(file,"%lld\n",values[NUM_EVENTS-1]);
+	printf("%lld\n",values[NUM_EVENTS-1]);
 	fclose(file);
-
 	return 0;
 }
 
