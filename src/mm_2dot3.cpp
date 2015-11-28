@@ -8,8 +8,7 @@
 #include <cstdlib>
 #include <iostream>
 
-#define NUM_EVENTS 2
-#define SIZE 5
+#define NUM_EVENTS 7
 #define TIME_RESOLUTION 1000000
 
 long long unsigned initial_time, final_time, total_duration;
@@ -34,9 +33,9 @@ void stop ( void ) {
 	total_duration = final_time - initial_time;
 }
 
-void fillMatrices (float **a, float **b, float **c ){
-	for (unsigned i=0;i<SIZE;++i){
-		for(unsigned j=0; j<SIZE; ++j){
+void fillMatrices (float **a, float **b, float **c, int N){
+	for (unsigned i=0;i<N;++i){
+		for(unsigned j=0; j<N; ++j){
 			a[i][j] = ((float) rand()) / ((float) RAND_MAX);
 			b[i][j] = ((float) rand()) / ((float) RAND_MAX);
 			c[i][j] = 0;
@@ -55,26 +54,28 @@ void matrix_mult_2dot3 (float **a, float **b, float **c, int N){
 }
 
 int main (int argc, char *argv[]){
+	
+	int size = atoi(argv[1]);	
 
 	float **mat_a, **mat_b, **mat_c;
-	mat_a = new float*[SIZE];
-	mat_b = new float*[SIZE];
-	mat_c = new float*[SIZE];
+	mat_a = new float*[size];
+	mat_b = new float*[size];
+	mat_c = new float*[size];
 
-	for (unsigned i = 0; i < SIZE; ++i) {
-		mat_a[i] = new float[SIZE];
-		mat_b[i] = new float[SIZE];
-		mat_c[i] = new float[SIZE];
+	for (unsigned i = 0; i < size; ++i) {
+		mat_a[i] = new float[size];
+		mat_b[i] = new float[size];
+		mat_c[i] = new float[size];
 	}
 
 
-	int Events[NUM_EVENTS]={PAPI_FP_INS,PAPI_TOT_CYC}; 
+	int Events[NUM_EVENTS]={PAPI_FP_OPS,PAPI_TOT_CYC,PAPI_TOT_INS,PAPI_LD_INS,PAPI_L1_TCM,PAPI_L2_TCM,PAPI_L3_TCM}; 
 
 	int EventSet;
 	long long values[NUM_EVENTS];
 
 	//Fill Matrices
-	fillMatrices(mat_a, mat_b, mat_c );
+	fillMatrices(mat_a, mat_b, mat_c, size );
 
 	int retval;
 	retval = PAPI_library_init(PAPI_VER_CURRENT);
@@ -83,13 +84,13 @@ int main (int argc, char *argv[]){
 	int ite = 0;
 	FILE *file;
 	file = fopen("../Results/results_L1.csv","w");
-	fprintf(file,"Execution Time,PAPI_FP_INS,PAPI_TOT_CYC\n");
+	fprintf(file,"Execution Time,PAPI_FP_OPS,PAPI_TOT_CYC,PAPI_TOT_INS,PAPI_LD_INS,PAPI_L1_TCM,PAPI_L2_TCM,PAPI_L3_TCM\n");
 	do{
 		clearCache();
 		retval = PAPI_start(EventSet);
 		start();
 		//Matrix Multiplication
-		matrix_mult_2dot3 ( mat_a, mat_b, mat_c,SIZE);	
+		matrix_mult_2dot3 ( mat_a, mat_b, mat_c, size);	
 		stop();
 		retval = PAPI_stop(EventSet,values);
 		
