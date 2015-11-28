@@ -31,7 +31,7 @@
 
 #PBS -l nodes=1:ppn=12:r431:m48
 
-modul purge
+module purge
 module load intel/2013.1.117
 module load papi/5.4.1
 echo "Done Loading Modules..."
