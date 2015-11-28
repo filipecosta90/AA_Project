@@ -65,7 +65,7 @@ void matrix_mult_ikj (float **a, float **b, float **c, int N){
 
 int main (int argc, char *argv[]){
 
-	int size = atoi(argv[1]);	
+	int  size = atoi(argv[1]);	
 
 	float **mat_a, **mat_b, **mat_c;
 	mat_a = new float*[size];
@@ -100,18 +100,15 @@ int main (int argc, char *argv[]){
 		retval = PAPI_start(EventSet);
 		start();
 		//Matrix Multiplication
-		matrix_mm_ikj ( mat_a, mat_b, mat_c, size);	
+		matrix_mult_ikj ( mat_a, mat_b, mat_c, size);	
 		stop();
 		retval = PAPI_stop(EventSet,values);
-
-		fprintf(file,"%d,",total_duration);
+		fprintf(file,"%lld,",total_duration);
 		for(int i = 0; i<NUM_EVENTS-1; i++){
 			fprintf(file,"%lld,",values[i]);	
 		}
 		fprintf(file,"%lld\n",values[NUM_EVENTS-1]);
-
 		retval = PAPI_reset(EventSet);		
-
 		ite++;
 
 	}while(ite<8);
