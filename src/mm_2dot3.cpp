@@ -43,7 +43,17 @@ void fillMatrices (float **a, float **b, float **c, int N){
 	}
 }
 
-void matrix_mult_2dot3 (float **a, float **b, float **c, int N){
+void matrix_mult_ijk (float **a, float **b, float **c, int N){
+	for(unsigned i=0;i<N;i++){
+		for(unsigned j=0;j<N;j++){
+			for(unsigned k=0;k<N;k++){
+				c[i][j] += a[i][k] * b[k][j];
+			}
+		}
+	}
+}
+
+void matrix_mult_ikj (float **a, float **b, float **c, int N){
 	for(unsigned i=0;i<N;i++){
 		for(unsigned k=0;k<N;k++){
 			for(unsigned j=0;j<N;j++){
@@ -54,7 +64,7 @@ void matrix_mult_2dot3 (float **a, float **b, float **c, int N){
 }
 
 int main (int argc, char *argv[]){
-	
+
 	int size = atoi(argv[1]);	
 
 	float **mat_a, **mat_b, **mat_c;
@@ -90,18 +100,18 @@ int main (int argc, char *argv[]){
 		retval = PAPI_start(EventSet);
 		start();
 		//Matrix Multiplication
-		matrix_mult_2dot3 ( mat_a, mat_b, mat_c, size);	
+		matrix_mm_ikj ( mat_a, mat_b, mat_c, size);	
 		stop();
 		retval = PAPI_stop(EventSet,values);
-		
+
 		fprintf(file,"%d,",total_duration);
 		for(int i = 0; i<NUM_EVENTS-1; i++){
 			fprintf(file,"%lld,",values[i]);	
 		}
 		fprintf(file,"%lld\n",values[NUM_EVENTS-1]);
-		
+
 		retval = PAPI_reset(EventSet);		
-	
+
 		ite++;
 
 	}while(ite<8);

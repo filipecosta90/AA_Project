@@ -31,13 +31,13 @@ void matrix_mult_2dot3 (float **a, float **b, float **c, int N){
 int main (int argc, char *argv[]){
 	
 	float **mat_a, **mat_b, **mat_c;
-	mat_a = malloc (SIZE*sizeof(float*));
-	mat_b = malloc (SIZE*sizeof(float*));
-	mat_c = malloc (SIZE*sizeof(float*));
+	mat_a = (float**) malloc (SIZE*sizeof(float*));
+	mat_b = (float**) malloc (SIZE*sizeof(float*));
+	mat_c = (float**) malloc (SIZE*sizeof(float*));
 	for(unsigned i=0;i<SIZE;i++){
-		mat_a[i]= malloc ( SIZE * sizeof (float*));
-		mat_b[i]= malloc ( SIZE * sizeof (float*));
-		mat_c[i]= malloc ( SIZE * sizeof (float*));
+		mat_a[i]=(float*) malloc ( SIZE * sizeof (float*));
+		mat_b[i]=(float*) malloc ( SIZE * sizeof (float*));
+		mat_c[i]=(float*) malloc ( SIZE * sizeof (float*));
 	}
 
 	int Events[NUM_EVENTS]={PAPI_FP_INS,PAPI_TOT_CYC}; 

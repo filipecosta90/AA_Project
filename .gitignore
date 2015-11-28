@@ -9,3 +9,4 @@ CMakeCache.txt
 equalization
 *.e*
 *.o*
+Results/** 
