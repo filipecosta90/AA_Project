@@ -15,6 +15,7 @@ int events[1];
 	long long counts[1];
 counts[0] = 0;
 
+  retval = PAPI_library_init(PAPI_VER_CURRENT);
         /* Initialize the PAPI library */
       retval = PAPI_query_event(PAPI_LD_INS);
 	if (retval != PAPI_OK) {
