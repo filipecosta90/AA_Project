@@ -47,7 +47,7 @@ printf("counts %lld\t\n", counts[0]);
 
 
         /* Add Total Instructions Executed to our EventSet */
-        retval = PAPI_add_event(EventSet, 0x80000035); 
+        retval = PAPI_add_event(EventSet, PAPI_LD_INS); 
 	if( retval != PAPI_OK)
             printf ("%s:%d\t %d ERROR 2\n", __FILE__, __LINE__, retval);
 if( retval == PAPI_ENOEVNT )
