@@ -100,15 +100,15 @@ int main (int argc, char *argv[]){
 retval = PAPI_stop(EventSet,values);
 	
 	FILE *file;
-	file = fopen(argv[1],"w+");
+	file = fopen(argv[1],"a");
 
-	fprintf(file,"%lld,",total_duration);
+	fprintf(file,"%lld,",(float)total_duration);
 	for(int i = 0; i<NUM_EVENTS; i++){
-		fprintf(file,"%lld,",values[i]);	
-		printf("%lld\t",values[i]);	
+		fprintf(file,"%f,",(float) values[i]);	
+		printf("%f\t",(float) values[i]);	
 	}
-	fprintf(file,"%lld\n",values[NUM_EVENTS-1]);
-	printf("%lld\n",values[NUM_EVENTS-1]);
+	fprintf(file,"%f\n",(float)values[NUM_EVENTS-1]);
+	printf("%f\n", (float) values[NUM_EVENTS-1]);
 	fclose(file);
 	return 0;
 }
