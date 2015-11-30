@@ -3,11 +3,15 @@
 #include "papi.h"
 
 #define NUM_EVENTS 10
+#define CLEAR 1024
 
 void clearCache(){
-	double clearcache [30000000];
-	for (unsigned i = 0; i < 30000000; ++i)
-		clearcache[i] = i;
+	float clearcache [CLEAR][CLEAR];
+	for (unsigned i=0;i<CLEAR;++i){
+		for(unsigned j=0; j<CLEAR; ++j){
+			clearcache[i][j] = i;
+		}
+	}
 }
 
 void fillMatrices (float **a, float **b, float **c, int N){
@@ -165,10 +169,8 @@ int main (int argc, char *argv[]){
 	printf("%lld\t", counts[1]);	
 	fprintf(file,"%lld,", counts[2]);	
 	printf("%lld\t", counts[2]);	
-	fprintf(file,"%lld,", counts[3]);	
-	printf("%lld\t", counts[3]);	
-//	fprintf(file,"%lld\n", counts[4]);	
-//	printf("%lld\n", counts[4]);	
+	fprintf(file,"%lld\n", counts[3]);	
+	printf("%lld\n", counts[3]);	
 	fclose(file);
 	return 0;
 }

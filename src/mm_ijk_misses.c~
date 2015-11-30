@@ -3,15 +3,12 @@
 #include "papi.h"
 
 #define NUM_EVENTS 10
-#define CLEAR 1024
+#define CLEAR 4194304
 
 void clearCache(){
-	float clearcache [CLEAR][CLEAR];
-	for (unsigned i=0;i<CLEAR;++i){
-		for(unsigned j=0; j<CLEAR; ++j){
-			clearcache[i][j] = i;
-		}
-	}
+	double clearcache [CLEAR];
+	for (unsigned i = 0; i < CLEAR; ++i)
+		clearcache[i] = i;
 }
 
 void fillMatrices (float **a, float **b, float **c, int N){
@@ -132,15 +129,21 @@ int main (int argc, char *argv[]){
 	long long counts[NUM_EVENTS];
 
 	/*MAIN MEMORY ACESSES PER INSTRUCTION*/
-	events[0]=PAPI_L3_TCM;
-	events[1]=PAPI_FP_INS;
+//	events[0]=PAPI_L1_TCM;
+	events[0]=PAPI_L2_TCM;
+	events[1]=PAPI_L3_TCM;
+	events[2]=PAPI_L2_TCA;
+	events[3]=PAPI_L3_TCA;
 
 	counts[0] = 0;
 	counts[1] = 0;
+	counts[2] = 0;
+	counts[3] = 0;
+	counts[4] = 0;
 
 	PAPI_library_init(PAPI_VER_CURRENT);
 
-	PAPI_start_counters(events,2);
+	PAPI_start_counters(events,4);
 	start_us = PAPI_get_real_usec();
 
 
@@ -148,7 +151,7 @@ int main (int argc, char *argv[]){
 
 
 	stop_us = PAPI_get_real_usec();
-	PAPI_stop_counters(counts,2);
+	PAPI_stop_counters(counts,4);
 
 	long_long duration_us = stop_us - start_us;
 
@@ -159,8 +162,12 @@ int main (int argc, char *argv[]){
 	printf("%lld\t", duration_us );	
 	fprintf(file,"%lld,", counts[0]);	
 	printf("%lld\t", counts[0]);	
-	fprintf(file,"%lld\n", counts[1]);	
-	printf("%lld\n", counts[1]);	
+	fprintf(file,"%lld,", counts[1]);	
+	printf("%lld\t", counts[1]);	
+	fprintf(file,"%lld,", counts[2]);	
+	printf("%lld\t", counts[2]);	
+	fprintf(file,"%lld\n", counts[3]);	
+	printf("%lld\n", counts[3]);	
 	fclose(file);
 	return 0;
 }

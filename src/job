@@ -1,12 +1,11 @@
 #!/bin/sh
 
-gcc -O3 -std=c99 mm_ijk_bytes.c -lpapi -o mm_ijk_bytes
-gcc -O3 -std=c99 mm_ikj_bytes.c -lpapi -o mm_ikj_bytes
-gcc -O3 -std=c99 mm_ijk_ram.c -lpapi -o mm_ijk_ram
-gcc -O3 -std=c99 mm_ikj_ram.c -lpapi -o mm_ikj_ram
-gcc -O3 -std=c99 mm_ijk_flops.c -lpapi -o mm_ijk_flops
-gcc -O3 -std=c99 mm_ikj_flops.c -lpapi -o mm_ikj_flops
-
+gcc -O2 -std=c99 mm_ijk_bytes.c -lpapi -o mm_ijk_bytes
+gcc -O2 -std=c99 mm_ikj_bytes.c -lpapi -o mm_ikj_bytes
+gcc -O2 -std=c99 mm_ijk_ram.c -lpapi -o mm_ijk_ram
+gcc -O2 -std=c99 mm_ikj_ram.c -lpapi -o mm_ikj_ram
+gcc -O2 -std=c99 mm_ijk_flops.c -lpapi -o mm_ijk_flops
+gcc -O2 -std=c99 mm_ikj_flops.c -lpapi -o mm_ikj_flops
 
 for matrix in 48 128 512 2048
 do
