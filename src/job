@@ -1,14 +1,14 @@
 #!/bin/sh
 
-g++ -O3 -std=c++11 mm_ikj.cpp -lpapi -o mm_ikj
-g++ -O3 -std=c++11 headers.cpp  -o make_header
+gcc -O3 -std=c99 mm_ijk_time.c -lpapi -o mm_ijk_time
+gcc -O3 -std=c99 mm_ikj_time.c -lpapi -o mm_ikj_time
 
 for matrix in 48 128 512 2048
 do
 echo "matrix size $matrix x $matrix"
-./make_header $matrix
 for it in 1 2 3 4 5 6 7 8
 do
-   ./mm_ikj $matrix 
+   ./mm_ikj_time $matrix $matrix"_ikj_time.csv"
+   ./mm_ijk_time $matrix $matrix"_ijk_time.csv"
 done
 done
