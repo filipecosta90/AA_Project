@@ -1,0 +1,15 @@
+#!/bin/sh
+
+gcc -O3 -std=c99 mm_ijk_misses.c -lpapi -o mm_ijk_misses
+gcc -O3 -std=c99 mm_ikj_misses.c -lpapi -o mm_ikj_misses
+
+
+for matrix in 48 128 512 2048
+do
+echo "matrix size $matrix x $matrix"
+for it in 1 2 3 4 5 6 7 8
+do
+   ./mm_ikj_misses $matrix $matrix"_ikj_misses.csv"
+   ./mm_ijk_misses $matrix $matrix"_ijk_misses.csv"
+done
+done

@@ -1,14 +1,23 @@
 #!/bin/sh
 
-gcc -O3 -std=c99 mm_ijk_time.c -lpapi -o mm_ijk_time
-gcc -O3 -std=c99 mm_ikj_time.c -lpapi -o mm_ikj_time
+gcc -O3 -std=c99 mm_ijk_bytes.c -lpapi -o mm_ijk_bytes
+gcc -O3 -std=c99 mm_ikj_bytes.c -lpapi -o mm_ikj_bytes
+gcc -O3 -std=c99 mm_ijk_ram.c -lpapi -o mm_ijk_ram
+gcc -O3 -std=c99 mm_ikj_ram.c -lpapi -o mm_ikj_ram
+gcc -O3 -std=c99 mm_ijk_flops.c -lpapi -o mm_ijk_flops
+gcc -O3 -std=c99 mm_ikj_flops.c -lpapi -o mm_ikj_flops
+
 
 for matrix in 48 128 512 2048
 do
 echo "matrix size $matrix x $matrix"
 for it in 1 2 3 4 5 6 7 8
 do
-   ./mm_ikj_time $matrix $matrix"_ikj_time.csv"
-   ./mm_ijk_time $matrix $matrix"_ijk_time.csv"
+   ./mm_ikj_bytes $matrix $matrix"_ikj_bytes.csv"
+   ./mm_ijk_bytes $matrix $matrix"_ijk_bytes.csv"
+   ./mm_ikj_ram $matrix $matrix"_ikj_ram.csv"
+   ./mm_ijk_ram $matrix $matrix"_ijk_ram.csv"
+   ./mm_ikj_flops $matrix $matrix"_ikj_flops.csv"
+   ./mm_ijk_flops $matrix $matrix"_ijk_flops.csv"
 done
 done
