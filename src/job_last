@@ -1,0 +1,15 @@
+#!/bin/sh
+
+gcc  -std=c99 loads_ikj.c -lpapi -o loads_ikj
+gcc  -std=c99 loads_ijk.c -lpapi -o loads_ijk
+
+for matrix in 48 128 512 2048
+do
+echo "matrix size $matrix x $matrix"
+for it in 1 2 3 4 5 6 7 8
+do
+   ./loads_ikj $matrix "loads_"$matrix"_ikj.csv"
+   ./loads_ijk $matrix "loads_"$matrix"_ijk.csv"
+done
+done
+

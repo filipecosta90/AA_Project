@@ -5,17 +5,21 @@ gcc  -O3 -ftree-vectorize -fopt-info-vec-all -std=c99 mm_ikj_ram.c -lpapi -o ram
 gcc  -O3 -ftree-vectorize -fopt-info-vec-all -std=c99 mm_ikj_flops.c -lpapi -o flops_vec
 gcc  -O3 -ftree-vectorize -fopt-info-vec-all -std=c99 mm_ikj_misses.c -lpapi -o misses_vec
 gcc  -O3 -ftree-vectorize -fopt-info-vec-all -std=c99 mm_ikj_flops_vec.c -lpapi -o flops_vectorized
+gcc  -O3 -ftree-vectorize -fopt-info-vec-all -std=c99 loads_ikj.c -lpapi -o loads_ikj_vec
+gcc  -O3 -ftree-vectorize -fopt-info-vec-all -std=c99 sr_ins_ikj.c -lpapi -o sr_ins_ikj_vec
 
 for matrix in 48
 do
 echo "matrix size $matrix x $matrix"
 for it in 1 2 3 4 5 6 7 8
 do
-   ./bytes_vec $matrix $matrix"_bytes_vec.csv"
-   ./ram_vec $matrix $matrix"_ram_vec.csv"
-   ./flops_vec $matrix $matrix"_flops_vec.csv"
-   ./misses_vec $matrix $matrix"_misses_vec.csv"
-   ./flops_vectorized $matrix $matrix"_flops_vectorized.csv"
+   ./bytes_vec $matrix "vec/"$matrix"_bytes_vec.csv"
+   ./ram_vec $matrix "vec/"$matrix"_ram_vec.csv"
+   ./flops_vec $matrix "vec/"$matrix"_flops_vec.csv"
+   ./misses_vec $matrix "vec/"$matrix"_misses_vec.csv"
+   ./flops_vectorized $matrix "vec/"$matrix"_flops_vectorized.csv"
+   ./loads_ikj_vec $matrix "vec/"$matrix"_load_ikj_vec.csv"
+   ./sr_ins_ikj_vec $matrix "vec/"$matrix"_sr_ins_ikj_vec.csv"
 done
 done
 

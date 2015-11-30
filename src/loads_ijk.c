@@ -12,6 +12,7 @@ void clearCache(){
 			clearcache[i][j] = i;
 		}
 	}
+
 }
 
 void fillMatrices (float **a, float **b, float **c, int N){
@@ -132,23 +133,21 @@ int main (int argc, char *argv[]){
 	long long counts[NUM_EVENTS];
 
 	/*MAIN MEMORY ACESSES PER INSTRUCTION*/
-	events[0]=PAPI_L3_TCM;
-	events[1]=PAPI_FP_INS;
+	events[0]=PAPI_LD_INS;
 
 	counts[0] = 0;
-	counts[1] = 0;
 
 	PAPI_library_init(PAPI_VER_CURRENT);
 
-	PAPI_start_counters(events,2);
+	PAPI_start_counters(events,1);
 	start_us = PAPI_get_real_usec();
 
 
-	matrix_mult_ikj ( mat_a, mat_b, mat_c, size);	
+	matrix_mult_ijk ( mat_a, mat_b, mat_c, size);	
 
 
 	stop_us = PAPI_get_real_usec();
-	PAPI_stop_counters(counts,2);
+	PAPI_stop_counters(counts,1);
 
 	long_long duration_us = stop_us - start_us;
 
@@ -157,10 +156,8 @@ int main (int argc, char *argv[]){
 
 	fprintf(file, "%lld,", duration_us );
 	printf("%lld\t", duration_us );	
-	fprintf(file,"%lld,", counts[0]);	
-	printf("%lld\t", counts[0]);	
-	fprintf(file,"%lld\n", counts[1]);	
-	printf("%lld\n", counts[1]);	
+	fprintf(file,"%lld\n", counts[0]);	
+	printf("%lld\n", counts[0]);	
 	fclose(file);
 	return 0;
 }
