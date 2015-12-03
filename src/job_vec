@@ -8,7 +8,7 @@ gcc  -O3 -ftree-vectorize -fopt-info-vec-all -std=c99 mm_ikj_flops_vec.c -lpapi 
 gcc  -O3 -ftree-vectorize -fopt-info-vec-all -std=c99 loads_ikj.c -lpapi -o loads_ikj_vec
 gcc  -O3 -ftree-vectorize -fopt-info-vec-all -std=c99 sr_ins_ikj.c -lpapi -o sr_ins_ikj_vec
 
-for matrix in 48 126 512 2048
+for matrix in 128 
 do
 echo "matrix size $matrix x $matrix"
 for it in 1 2 3 4 5 6 7 8
